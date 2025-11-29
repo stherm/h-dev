@@ -9,4 +9,6 @@
     dataDir = "/data/matrix-synapse";
   };
 
+  services.livekit.apiKey = "API5KrYmk3nGL7V";
+
 }
