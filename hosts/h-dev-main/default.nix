@@ -15,6 +15,7 @@
   ];
 
   networking.hostName = "h-dev-main";
+  networking.domain = "h-dev.org";
 
   services = {
     nginx.enable = true;
