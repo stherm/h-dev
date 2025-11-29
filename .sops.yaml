@@ -1,0 +1,9 @@
+keys:
+  - &host_h-dev-main age1tjw70jcg6upc433g87w0hathe60x0r4z7wchhxt2j7622n3tkgvsr4jasw
+  - &user_steffen age1e8p35795htf7twrejyugpzw0qja2v33awcw76y4gp6acnxnkzq0s935t4t
+creation_rules:
+  - path_regex: hosts/h-dev-main/secrets/secrets.yaml$
+    key_groups:
+      - age:
+          - *user_steffen
+          - *host_h-dev-main

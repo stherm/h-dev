@@ -11,7 +11,9 @@
 
     ./boot.nix
     ./hardware.nix
+    ./matrix.nix
     ./packages.nix
+    ./secrets
   ];
 
   networking.hostName = "h-dev-main";
