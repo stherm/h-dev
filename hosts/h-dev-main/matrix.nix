@@ -1,11 +1,11 @@
 { inputs, ... }:
 
 {
-  imports = [
-    inputs.core.nixosModules.matrix-synapse
-    ./element-call.nix
-  ];
-  #imports = [ ../../modules/nixos/matrix-synapse ];
+  #imports = [
+  #  inputs.core.nixosModules.matrix-synapse
+  #  ./element-call.nix
+  #];
+  imports = [ ../../modules/nixos/matrix-synapse ];
 
   services.matrix-synapse = {
     enable = true;
