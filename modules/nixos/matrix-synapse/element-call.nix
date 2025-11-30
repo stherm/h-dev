@@ -8,7 +8,7 @@
 let
   domain = config.networking.domain;
   cfg = config.services.livekit;
-  keyFile = config.sops.templates."livekit/key".path;
+  keyFile = config.sops.templates."livekit/keyfile".path;
 
   callConfig = {
     default_server_config = {
@@ -95,15 +95,26 @@ in
       };
     };
 
-    sops.secrets.livekit_secret = {
+    sops.secrets."livekit/key" = {
       owner = "root";
     };
 
-    sops.templates."livekit/key" = {
+    sops.templates."livekit/keyfile" = {
       content = ''
-        ${cfg.apiKey}: ${config.sops.placeholder.livekit_secret}
+        ${cfg.apiKey}: ${config.sops.placeholder."livekit/key"}
       '';
       mode = "0444";
     };
+
+    #sops.secrets.livekit_secret = {
+    #  owner = "root";
+    #};
+
+    #sops.templates."livekit/key" = {
+    #  content = ''
+    #    ${cfg.apiKey}: ${config.sops.placeholder.livekit_secret}
+    #  '';
+    #  mode = "0444";
+    #};
   };
 }
