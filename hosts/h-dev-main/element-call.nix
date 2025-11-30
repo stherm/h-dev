@@ -6,7 +6,7 @@
 }:
 
 let
-  domain = "sid.ovh";
+  domain = "h-dev.org";
   baseUrl = "https://${domain}";
 
   # nix-shell -p livekit --run "livekit-server generate-keys | tail -1 | awk '{print $3}'"
