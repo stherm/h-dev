@@ -15,21 +15,23 @@ wait_for_device $SSD
 wipefs -a $SSD
 
 fdisk $SSD << EOF
-g
+o
 n
+p
 1
 
 +512M
-t
-1
+a
 n
+p
 2
 
 +${SWAP_GB}G
 t
 2
-19
+82
 n
+p
 3
 
 
@@ -42,7 +44,7 @@ wait_for_device "${SSD}1"
 wait_for_device "${SSD}2"
 wait_for_device "${SSD}3"
 
-mkfs.vfat -F 32 -n BOOT "${SSD}1"
+mkfs.ext4 -L BOOT "${SSD}1"
 mkswap -L SWAP "${SSD}2"
 mkfs.ext4 -L ROOT "${SSD}3"
 
