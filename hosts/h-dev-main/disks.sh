@@ -10,47 +10,31 @@ wait_for_device() {
 
 swapoff --all || true
 udevadm settle
-wait_for_device $SSD
+wait_for_device "$SSD"
 
-wipefs -a $SSD
+wipefs -a "$SSD"
 
-fdisk $SSD << EOF
-o
-n
-p
-1
+parted -s "$SSD" \
+  mklabel gpt \
+  mkpart ESP fat32 1MiB 513MiB \
+  set 1 esp on \
+  mkpart primary linux-swap 513MiB "$((513 + SWAP_GB*1024))"MiB \
+  mkpart primary ext4 "$((513 + SWAP_GB*1024))"MiB 100%
 
-+512M
-a
-n
-p
-2
-
-+${SWAP_GB}G
-t
-2
-82
-n
-p
-3
-
-
-w
-EOF
-
-partprobe -s $SSD
+partprobe -s "$SSD"
 udevadm settle
 wait_for_device "${SSD}1"
 wait_for_device "${SSD}2"
 wait_for_device "${SSD}3"
 
-mkfs.ext4 -L BOOT "${SSD}1"
+mkfs.vfat -n BOOT "${SSD}1"
 mkswap -L SWAP "${SSD}2"
 mkfs.ext4 -L ROOT "${SSD}3"
 
-mount -o X-mount.mkdir "${SSD}3" "$MNT"
+mount "${SSD}3" "$MNT"
 mkdir -p "$MNT/boot"
 mount "${SSD}1" "$MNT/boot"
 swapon "${SSD}2"
 
 lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL
+

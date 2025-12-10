@@ -1,9 +1,8 @@
+# boot.nix
 {
   boot.loader = {
-    grub = {
-      enable = true;
-      device = "/dev/sda";
-    };
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
     timeout = 1;
   };
 }
