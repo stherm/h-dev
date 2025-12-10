@@ -11,16 +11,15 @@
 
     ./boot.nix
     ./hardware.nix
-    ./matrix.nix
     ./packages.nix
-    ./secrets
+    #./secrets
   ];
 
   networking.hostName = "h-dev-main";
   networking.domain = "h-dev.org";
 
   services = {
-    nginx.enable = true;
+    nginx.enable = false;
   };
 
   normalUsers = {
